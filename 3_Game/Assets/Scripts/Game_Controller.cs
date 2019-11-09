@@ -10,10 +10,13 @@ public class Game_Controller : MonoBehaviour
     [SerializeField] bool forrest_isFinished = false;
     [SerializeField] bool desert_isFinished = false;
 
+    public bool is_hitable = true;
+
+    Player_Controller playerscript;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerscript = GameObject.FindWithTag("Player").GetComponent<Player_Controller>();
     }
 
     // Update is called once per frame
@@ -24,6 +27,8 @@ public class Game_Controller : MonoBehaviour
         {
             print("game is won");
         }
+
+        print(is_hitable);
     }
     //TODO monitor how much of the game the player has completed
 
@@ -53,5 +58,29 @@ public class Game_Controller : MonoBehaviour
         desert_isFinished = true;
     }
 
+    public void damagePlayer()
+    {
+        health -= 1;
+        print(health);
+    }
+
+    public void setHitable(bool canHit)
+    {
+        is_hitable = canHit;
+    }
+
+    //awaits a set period of time before player can get hit again
+    public IEnumerator recover(float waittime)
+    {
+
+        yield return new WaitForSeconds(waittime);
+        //returns speed back to normal
+        if (playerscript.speed >= playerscript.dashSpeed)
+        {
+            playerscript.speed -= playerscript.dashSpeed;
+        }
+        //makes the player able to be hit
+        setHitable(true);
+    }
 
 }
