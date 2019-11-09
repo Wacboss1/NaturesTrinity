@@ -19,10 +19,39 @@ public class Game_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(mountain_isFinished && forrest_isFinished && desert_isFinished)
+        //checks if all the objectives have been aquired
+        if (isWon())
         {
             print("game is won");
         }
     }
     //TODO monitor how much of the game the player has completed
+
+    //returns true if all the objectives have been aquired
+    private bool isWon()
+    {
+        if (mountain_isFinished && forrest_isFinished && desert_isFinished)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void completeMountain()
+    {
+        mountain_isFinished = true;
+    }
+    public void completeForrest()
+    {
+        forrest_isFinished = true;
+    }
+    public void completeDesert()
+    {
+        desert_isFinished = true;
+    }
+
+
 }
