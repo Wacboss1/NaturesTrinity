@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Game_Controller.cs" />
     <Compile Include="Assets\Scripts\Objective.cs" />
     <Compile Include="Assets\Scripts\Player_Controller.cs" />
+    <Compile Include="Assets\Scripts\Ui_Controller.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/William Clemmons Jr/Documents/3_Game/3_Game/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

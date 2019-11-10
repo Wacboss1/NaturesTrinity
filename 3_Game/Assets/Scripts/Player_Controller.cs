@@ -4,34 +4,39 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
-    public float speed = 1f;
+    public float currentSpeed = 1f;
     public float dashSpeed = 10;
     public float dodgetime = 1;
+    public float originSpeed;
 
     Game_Controller controller;
-    BoxCollider2D[] colliders;
+    CircleCollider2D[] colliders;
 
     void Start()
     {
         controller = this.GetComponent<Game_Controller>();
-        colliders = this.GetComponents<BoxCollider2D>();
-        
+        colliders = this.GetComponents<CircleCollider2D>();
+
+        originSpeed = currentSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
         move();
+        //activates dodge when space is pushed
         if (Input.GetKeyDown("space"))
         {
             dodge();
         }
+        //resests speed at end of every frame to prevent double dashing
+        resetSpeed();
     }
 
     private void move()
     {
-        float xtranslation = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        float ytranslation = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+        float xtranslation = Input.GetAxis("Horizontal") * Time.deltaTime * currentSpeed;
+        float ytranslation = Input.GetAxis("Vertical") * Time.deltaTime * currentSpeed;
 
         transform.Translate(xtranslation, ytranslation, 0);
     }
@@ -39,9 +44,17 @@ public class Player_Controller : MonoBehaviour
     //dashed the player and makes them immune to damage
     private void dodge()
     {
-        speed += dashSpeed;
+        currentSpeed += dashSpeed;
         controller.setHitable(false);
         StartCoroutine(controller.recover(dodgetime));
+    }
+
+    private void resetSpeed()
+    {
+        if (currentSpeed > originSpeed && controller.is_hitable == true)
+        {
+            currentSpeed = originSpeed;
+        }
     }
 
 }

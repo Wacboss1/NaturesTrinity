@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy_Controller : MonoBehaviour
 {
     [SerializeField] float speed = 1;
+    [SerializeField] float followDistance = 1;
+
     [SerializeField] Type enemyType;
 
     [SerializeField] Vector2 start;
@@ -18,8 +20,13 @@ public class Enemy_Controller : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
-        transform.position = start;
         controller = player.GetComponent<Game_Controller>();
+        target = player.GetComponent<Transform>();
+
+        if (enemyType == Type.constant)
+        {
+            transform.position = start;
+        }
     }
 
     // Update is called once per frame
@@ -38,8 +45,10 @@ public class Enemy_Controller : MonoBehaviour
 
     private void chase()
     {
-        target = player.GetComponent<Transform>();
-        this.transform.position = Vector2.MoveTowards(this.transform.position, target.position, speed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, target.position) <= followDistance)
+        {
+            this.transform.position = Vector2.MoveTowards(this.transform.position, target.position, speed * Time.deltaTime);
+        }
     }
 
     private void moveBetween(Vector2 start, Vector2 finish)
@@ -53,7 +62,7 @@ public class Enemy_Controller : MonoBehaviour
         {
             controller.is_hitable = false;
             controller.damagePlayer();
-            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, -.5f);
+            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, -1f);
             StartCoroutine(controller.recover(3));
         }
     }

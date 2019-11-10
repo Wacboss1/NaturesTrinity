@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Game_Controller : MonoBehaviour
 {
-    [SerializeField] int health = 3;
+    [SerializeField] int health = 1;
 
     [SerializeField] bool mountain_isFinished = false;
     [SerializeField] bool forrest_isFinished = false;
@@ -31,9 +31,9 @@ public class Game_Controller : MonoBehaviour
     //TODO monitor how much of the game the player has completed
 
     //returns true if all the objectives have been aquired
-    private bool isWon()
+    public bool isWon()
     {
-        if (mountain_isFinished && forrest_isFinished && desert_isFinished)
+        if (desert_isFinished)
         {
             return true;
         }
@@ -43,6 +43,16 @@ public class Game_Controller : MonoBehaviour
         }
     }
 
+    public bool isLose()
+    {
+        if(health == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //Updated the completion of the corresponding level
     public void completeMountain()
     {
         mountain_isFinished = true;
@@ -59,9 +69,9 @@ public class Game_Controller : MonoBehaviour
     public void damagePlayer()
     {
         health -= 1;
-        print(health);
     }
 
+    //changes whether or not the player can be hit/Take damage
     public void setHitable(bool canHit)
     {
         is_hitable = canHit;
@@ -78,9 +88,9 @@ public class Game_Controller : MonoBehaviour
 
         yield return new WaitForSeconds(waittime);
         //returns speed back to normal
-        if (playerscript.speed >= playerscript.dashSpeed)
+        if (playerscript.currentSpeed >= playerscript.dashSpeed)
         {
-            playerscript.speed -= playerscript.dashSpeed;
+            playerscript.currentSpeed -= playerscript.dashSpeed;
         }
         //makes the player able to be hit
         setHitable(true);
