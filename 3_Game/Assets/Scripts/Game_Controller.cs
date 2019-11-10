@@ -27,8 +27,6 @@ public class Game_Controller : MonoBehaviour
         {
             print("game is won");
         }
-
-        print(is_hitable);
     }
     //TODO monitor how much of the game the player has completed
 
@@ -67,6 +65,11 @@ public class Game_Controller : MonoBehaviour
     public void setHitable(bool canHit)
     {
         is_hitable = canHit;
+    }
+
+    public float getDodgeTime()
+    {
+        return playerscript.dodgetime;
     }
 
     //awaits a set period of time before player can get hit again

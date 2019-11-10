@@ -6,13 +6,10 @@ public class Player_Controller : MonoBehaviour
 {
     public float speed = 1f;
     public float dashSpeed = 10;
-
-    [SerializeField] float dodgetime = 1;
-    [SerializeField] character charact; 
+    public float dodgetime = 1;
 
     Game_Controller controller;
     BoxCollider2D[] colliders;
-    enum character { goat, armadillo, birb}
 
     void Start()
     {
@@ -27,7 +24,7 @@ public class Player_Controller : MonoBehaviour
         move();
         if (Input.GetKeyDown("space"))
         {
-            useCharacterAbility();
+            dodge();
         }
     }
 
@@ -39,20 +36,6 @@ public class Player_Controller : MonoBehaviour
         transform.Translate(xtranslation, ytranslation, 0);
     }
 
-    private void useCharacterAbility()
-    {
-        switch (charact)
-        {
-            case character.armadillo:
-                dodge();
-                print("dodging");
-                break;
-            case character.birb:
-                print("shooting");
-                break;
-        }
-    }
-
     //dashed the player and makes them immune to damage
     private void dodge()
     {
@@ -61,21 +44,4 @@ public class Player_Controller : MonoBehaviour
         StartCoroutine(controller.recover(dodgetime));
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //Checks if a smash is possible then excutes it when space is pressed
-        if (collision.gameObject.tag == "Smashable" && charact == character.goat)
-        {
-            if (Input.GetKey("space"))
-            {
-                collision.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //Deals damage to player when the collide with enemy
-
-    }
 }
