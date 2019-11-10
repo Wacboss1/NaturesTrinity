@@ -19,11 +19,15 @@ public class Ui_Controller : MonoBehaviour
     {
         if(controller.isWon() == true)
         {
+            controller.stopMovement();
             winScreen.SetActive(true);
+            StartCoroutine(reset());
         }
         else if (controller.isLose() == true)
         {
+            controller.stopMovement();
             loseScreen.SetActive(true);
+            StartCoroutine(reset());
         }
     }
 
@@ -33,8 +37,9 @@ public class Ui_Controller : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void restartGame()
+    IEnumerator reset()
     {
-        //runs after losing 
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(0);
     }
 }

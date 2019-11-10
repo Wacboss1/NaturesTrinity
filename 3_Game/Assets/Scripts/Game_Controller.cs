@@ -71,6 +71,11 @@ public class Game_Controller : MonoBehaviour
         health -= 1;
     }
 
+    public void stopMovement()
+    {
+        playerscript.canMove = false;
+    }
+
     //changes whether or not the player can be hit/Take damage
     public void setHitable(bool canHit)
     {

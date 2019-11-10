@@ -8,6 +8,7 @@ public class Player_Controller : MonoBehaviour
     public float dashSpeed = 10;
     public float dodgetime = 1;
     public float originSpeed;
+    public bool canMove = true;
 
     Game_Controller controller;
     CircleCollider2D[] colliders;
@@ -23,11 +24,14 @@ public class Player_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move();
-        //activates dodge when space is pushed
-        if (Input.GetKeyDown("space"))
+        if (canMove)
         {
-            dodge();
+            move();
+            //activates dodge when space is pushed
+            if (Input.GetKeyDown("space"))
+            {
+                dodge();
+            }
         }
         //resests speed at end of every frame to prevent double dashing
         resetSpeed();
